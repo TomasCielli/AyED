@@ -18,9 +18,21 @@ public class TestArrayList {
 		
 		EjercicioSucesion calculadora = new EjercicioSucesion();
 		List<Integer> sucesion = calculadora.calcularSucesion(15);
+		
+		ArrayList<Integer> sucesion_array = new ArrayList<Integer>();
+		for (int numero : sucesion) {
+			System.out.print(numero + " | ");
+			sucesion.add(numero);
+		}
+		
+		
+		System.out.println("");
+		InversorArray inversor = new InversorArray();
+		inversor.invertirArrayList(sucesion_array);
 		for (int numero : sucesion) {
 			System.out.print(numero + " | ");
 		}
+		
 	}
 
 }
