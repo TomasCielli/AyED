@@ -20,25 +20,17 @@ public class InversorArray {
 	*/
 	
 	public void invertirArrayList(ArrayList<Integer> lista) {
-		
-		int i = 0;
-		this.metodoRecursivo(lista, i);
-		
-		
+	
+		this.metodoRecursivo(lista, 0);
 	}
 	
-	private void metodoRecursivo(ArrayList<Integer> lista, int i) {
-		if (!(i >= lista.size()/2)) {
-			this.reemplazar(lista, i);
-			this.metodoRecursivo(lista, i + 1);
+	private void metodoRecursivo (ArrayList<Integer> lista, int i) {
+		
+		if (i < lista.size()) {
+			int valor = lista.get(i);
+			this.metodoRecursivo(lista, i+1);
+			lista.set((lista.size() - 1) - i, valor);
 		}
 	}
-	
-	private void reemplazar(ArrayList<Integer> lista, int i) {
-		int temp = lista.get(lista.size() - i - 1);
-		lista.set(lista.size() - i - 1, lista.get(i));
-		lista.set(i, temp);
-	}
-	
 	
 }
