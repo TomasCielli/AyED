@@ -1,6 +1,6 @@
 package tp2.ejercicio1;
 
-
+import tp1.ejercicio8.Queue;
 
 public class BinaryTree <T> {
 	
@@ -76,11 +76,25 @@ public class BinaryTree <T> {
 		return this.getData().toString();
 	}	
 		
-    	 
+    
     public BinaryTree<T> espejo(){
-    	
-    	BinaryTree<T> ab = new BinaryTree<T>();
-    	Queue<BinaryTree<T>> cola = new Queue<BinaryTree<T>>();
+    	BinaryTree<T> invertido = new BinaryTree<T>();
+    	invertido.setData(this.getData());
+    	if (!this.isLeaf()) {
+	    	BinaryTree<T> derecho = null, izquierdo = null;
+	    	if (this.hasLeftChild()) {
+	    		izquierdo = this.getLeftChild().espejo();
+	    	}
+	    	
+	    	if (this.hasRightChild()) {
+	    		derecho = this.getRightChild().espejo();
+	    	}
+	    	
+	    	
+	    	invertido.leftChild = derecho;
+	    	invertido.rightChild = izquierdo;
+    	}
+    	return invertido;
     }
 
 	// 0<=n<=m
