@@ -100,6 +100,26 @@ public class BinaryTree <T> {
 	// 0<=n<=m
 	public void entreNiveles(int n, int m){
 		
+		BinaryTree<T> ab = null;
+		Queue <BinaryTree<T>> cola = new Queue<BinaryTree<T>>();
+		int contador_nivel = 0;
+		
+		cola.enqueue(this);
+		cola.enqueue(null);
+		
+		while(!cola.isEmpty()) {
+			ab = cola.dequeue();
+			if (ab != null) {
+				if ((contador_nivel >= n) && (contador_nivel <= m)) {
+					System.out.print(ab.getData());
+				}
+				if (ab.hasLeftChild()) cola.enqueue(ab.getLeftChild());
+				if (ab.hasRightChild()) cola.enqueue(ab.getRightChild());
+			} else if (!cola.isEmpty()) {
+				contador_nivel++;
+				cola.enqueue(null);
+			}
+		}
    }
 	
 	public int contarHojas() {
