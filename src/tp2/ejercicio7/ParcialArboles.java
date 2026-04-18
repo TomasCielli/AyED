@@ -44,6 +44,8 @@ public class ParcialArboles {
 		
 	}
 	
+	
+	// ======================== EJERCICIO 7 ========================
 	public boolean isLeftTree(int num) {
 		
 		Resultado resultado = this.isLeftTreeRecursivo(num, this.arbol);
@@ -104,7 +106,44 @@ public class ParcialArboles {
 	}
 	
 	
+//================================================================================================
+	
+//======================== EJERCICIO 8 ========================
+	
+	public boolean esPrefijo(BinaryTree<Integer> arbol1, BinaryTree<Integer> arbol2) {
+		boolean resultado;
+		
+		if (!arbol1.isEmpty() && arbol2.isEmpty()) resultado = false;
+		else if (arbol1.isEmpty()) resultado = true;
+		else resultado = esPrefijoRecursivo(arbol1, arbol2);
+		
+		return resultado;
+	}
+	
+	public boolean esPrefijoRecursivo(BinaryTree<Integer> arbol1, BinaryTree<Integer> arbol2) {
+		
+		boolean resultado_izq= true, resultado_der= true, iguales = false;
+		
+		if (arbol1.getData().equals(arbol2.getData())) {
+			iguales = true;
+			if (arbol1.hasLeftChild()) {
+				if (arbol2.hasLeftChild()) {
+					resultado_izq = this.esPrefijoRecursivo(arbol1.getLeftChild(), arbol2.getLeftChild());
+				} else resultado_izq = false;
+			}
+			if (arbol1.hasRightChild() && resultado_izq) {
+				if (arbol2.hasRightChild()) {
+					resultado_der = this.esPrefijoRecursivo(arbol1.getRightChild(), arbol2.getRightChild());
+				} else resultado_der = false;
+			}
+		}
+		
+		return (iguales && resultado_izq && resultado_der);
+	}
 
+//================================================================================================
+
+	//======================== EJERCICIO 9 ========================
 	
 	
 }
