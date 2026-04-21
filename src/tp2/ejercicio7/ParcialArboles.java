@@ -145,5 +145,46 @@ public class ParcialArboles {
 
 	//======================== EJERCICIO 9 ========================
 	
+	public class NodoSumDif {
+		int suma = 0;
+		int dif = 0;
+		
+		private NodoSumDif(int s, int d) {
+			this.setSuma(s);
+			this.setDif(d);
+		}
+		public int getSuma() {
+			return suma;
+		}
+		public void setSuma(int suma) {
+			this.suma = suma;
+		}
+		public int getDif() {
+			return dif;
+		}
+		public void setDif(int dif) {
+			this.dif = dif;
+		}
+	}
+	
+	public BinaryTree<NodoSumDif> sumAndDif(BinaryTree<Integer> arbol){
+		return this.sumAndDif(arbol, 0, 0);
+	}
+	
+	private BinaryTree<NodoSumDif> sumAndDif(BinaryTree<Integer> arbol, int total, int original){
+		BinaryTree<NodoSumDif> nodo = new BinaryTree<NodoSumDif>();
+		if (!arbol.isEmpty()) {
+			int suma = total + arbol.getData(), dif = arbol.getData() - original;
+			nodo.setData(new NodoSumDif(suma, dif));
+			if (arbol.hasLeftChild()) {
+				nodo.addLeftChild(this.sumAndDif(arbol.getLeftChild(), suma, arbol.getData()));
+			}
+			if (arbol.hasRightChild()) {
+				nodo.addRightChild(this.sumAndDif(arbol.getRightChild(), suma, arbol.getData()));
+			}
+		}
+		return nodo;
+	}
+	
 	
 }

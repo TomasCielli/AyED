@@ -1,0 +1,14 @@
+# Claude
+.claude/
+
+# Tests
+src/tp2/tests/
+src/tp3/tests/
+
+# Compiled output
+bin/
+
+# Eclipse
+.settings/
+.project
+.classpath
