@@ -4,6 +4,7 @@ import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 
+import tp1.ejercicio8.Queue;
 import tp3.ejercicio1.GeneralTree;
 
 public class RecorridosAG {
@@ -82,7 +83,27 @@ public class RecorridosAG {
 	}
 	
 	
-	
+	public List<Integer> numerosImparesMayoresQuePorNiveles(GeneralTree <Integer> a, Integer n){
+		List<Integer> lista_impares = new LinkedList<Integer>();
+		if (!a.isEmpty()) {
+			Queue<GeneralTree<Integer>> cola = new Queue<GeneralTree<Integer>>();
+			GeneralTree<Integer> desencolado;
+			cola.enqueue(a);
+			while (!cola.isEmpty()) {
+				desencolado = cola.dequeue();
+				int dato = desencolado.getData();
+				if (this.cumpleCondicion(dato, n)) lista_impares.add(dato);
+				if (desencolado.hasChildren()) {
+					List<GeneralTree<Integer>> children = desencolado.getChildren();
+					Iterator<GeneralTree<Integer>> it = children.iterator();
+					while (it.hasNext()) {
+						cola.enqueue(it.next());
+					}
+				}
+			}
+		}
+		return lista_impares;
+	}
 	
 	
 	
