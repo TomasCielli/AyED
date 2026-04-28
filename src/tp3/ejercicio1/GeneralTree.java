@@ -166,4 +166,43 @@ public class GeneralTree<T>{
 		return max;
 	}
 	
+	public boolean esAncestro(T a, T b) {
+		boolean es_ancestro = false;
+		if (!this.isEmpty()) es_ancestro = this.buscarA(a, b);
+		return es_ancestro;
+	}
+	
+	private boolean buscarA(T a, T b) {
+		boolean es_ancestro = false;
+		if (this.getData().equals(a)) {
+			if (this.hasChildren()) {
+				Iterator<GeneralTree<T>> it = this.getChildren().iterator();
+				while (it.hasNext() && !es_ancestro) {
+					es_ancestro = it.next().buscarB(b);
+				}
+			}
+		} if (!es_ancestro && this.hasChildren()) {
+			Iterator<GeneralTree<T>> it = this.getChildren().iterator();
+			while (it.hasNext() && !es_ancestro) {
+				es_ancestro = it.next().buscarA(a, b);
+			}
+		}
+		return es_ancestro;
+	}
+	
+	private boolean buscarB(T b) {
+		boolean encontre_b = false;
+		if (this.getData().equals(b)) {
+			encontre_b = true;
+		} else {
+			if (this.hasChildren()) {
+				Iterator<GeneralTree<T>> it = this.getChildren().iterator();
+				while (it.hasNext() && !encontre_b) {
+					encontre_b = it.next().buscarB(b);
+				}
+			}
+		}
+		return encontre_b;
+	}
+	
 }
