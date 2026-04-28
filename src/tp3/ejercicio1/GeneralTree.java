@@ -1,7 +1,10 @@
 package tp3.ejercicio1;
 
+import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
+
+import tp1.ejercicio8.Queue;
 
 public class GeneralTree<T>{
 
@@ -58,16 +61,109 @@ public class GeneralTree<T>{
 	}
 	
 	public int altura() {	 
+		int altura = 0;
+		if (!this.isEmpty()) altura = this.altura_priv();
+		return altura;
+	}
+	
+	private int altura_priv() {
+		int altura = 0, altura_max = -1;
+		if (!this.isLeaf()) {
+			List<GeneralTree<T>> children = this.getChildren();
+			Iterator<GeneralTree<T>> it = children.iterator();
 			
-		return 0;
+			while (it.hasNext()) {
+				int altura_hijo = it.next().altura_priv();
+				if (altura_hijo > altura_max) altura_max = altura_hijo;
+			}
+			altura= altura_max + 1;
+		}
+		return altura;
 	}
 	
 	public int nivel(T dato){
-		return 0;
-	  }
+		int nivel = -1;
+		if (!this.isEmpty()) {
+			ResultadoNivel resultado = nivel_recursivo(dato);
+			if (resultado.isEncontrado()) {
+				nivel = resultado.getNivel();
+			}
+		}
+		return nivel;
+	}
+	
+	private ResultadoNivel nivel_recursivo(T dato) {
+		ResultadoNivel resultado = new ResultadoNivel(false, -1);
+		if (!this.getData().equals(dato)) {
+			if (this.hasChildren()) {
+				Iterator<GeneralTree<T>> it = this.getChildren().iterator();
+				while (it.hasNext() && (!resultado.isEncontrado())) {
+					resultado = it.next().nivel_recursivo(dato);
+				}
+				if (resultado.isEncontrado()) {
+					resultado.setNivel(resultado.getNivel()+ 1);
+				}
+			}
+		} else {
+			resultado.setEncontrado(true);
+			resultado.setNivel(0);
+		}
+		return resultado;
+	}
+	
+	private class ResultadoNivel {
+		boolean encontrado;
+		int nivel;
+		
+		private ResultadoNivel(boolean encontrado, int nivel){
+			this.encontrado = encontrado;
+			this.nivel = nivel;
+		}
+
+		public boolean isEncontrado() {
+			return encontrado;
+		}
+
+		public void setEncontrado(boolean encontrado) {
+			this.encontrado = encontrado;
+		}
+
+		public int getNivel() {
+			return nivel;
+		}
+
+		public void setNivel(int nivel) {
+			this.nivel = nivel;
+		}
+		
+		
+	}
 
 	public int ancho(){
-		
-		return 0;
+		int max = 0;
+		if (!this.isEmpty()) {
+			Queue<GeneralTree<T>> cola = new Queue<GeneralTree<T>>();
+			cola.enqueue(this);	cola.enqueue(null);
+			int cant = 0;
+			while (!cola.isEmpty()) {
+				GeneralTree<T> arbol = cola.dequeue();
+				if (arbol != null) {
+					cant++;
+					if (arbol.hasChildren()) {
+						List<GeneralTree<T>> children = arbol.getChildren();
+						for (GeneralTree<T> child : children) {
+							cola.enqueue(child);
+						}
+					}
+				} else {
+					if (!cola.isEmpty()) cola.enqueue(null);
+					max = cant > max? cant : max;
+					cant = 0;
+				}
+				
+			}
+		}
+		return max;
 	}
+	
 }
