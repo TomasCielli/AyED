@@ -42,26 +42,5 @@ public class Caminos {
 		
 	}
 	
-	public List<Integer> caminoAHojaMasLejanaBien(){
-		List<Integer> camino_maximo = new LinkedList<Integer>(), camino_actual = new LinkedList<Integer>();
-		if (!this.recorridos.isEmpty()) {
-			camino_maximo = this.caminoAHojaMasLejanaBien(this.recorridos, camino_maximo, camino_actual);
-		}
-		return camino_maximo;
-	}
-	
-	private List<Integer> caminoAHojaMasLejanaBien(GeneralTree<Integer> nodo, List<Integer> camino_maximo, List<Integer> camino_actual){
-		camino_actual.add(nodo.getData());
-		if (nodo.isLeaf()) camino_maximo = camino_actual.size() > camino_maximo.size()? new LinkedList<Integer>(camino_actual) : camino_maximo;
-		else {
-			Iterator<GeneralTree<Integer>> it = nodo.getChildren().iterator();
-			while (it.hasNext()) {
-				camino_maximo = this.caminoAHojaMasLejanaBien(it.next(), camino_maximo, camino_actual);
-			}
-		}
-		camino_actual.remove(0);
-		return camino_maximo;
-	}
-	
 	
 }
