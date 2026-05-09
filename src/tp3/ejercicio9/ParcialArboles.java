@@ -8,7 +8,7 @@ public class ParcialArboles {
 
 	public static boolean esDeSeleccion(GeneralTree<Integer> arbol) {
 		boolean es_de_seleccion = false;
-		if (!arbol.isEmpty()) {
+		if (arbol!= null && !arbol.isEmpty()) {
 			es_de_seleccion = esDeSeleccionRecursivo(arbol);
 		}
 		return es_de_seleccion;
